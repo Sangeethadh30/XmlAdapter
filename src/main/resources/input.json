@@ -1,0 +1,23 @@
+{
+	"channel": {
+		"title": "title",
+		"description": "desc",
+		"link": "href",
+		"generator": "generat"
+	},
+	"item": [{
+			"title": "heading1",
+			"description": "desc",
+			"link": "LINK",
+			"guid": "guidText",
+			"pubDate": "Date"
+		},
+		{
+			"title": "heading2",
+			"description": "desc2",
+			"link": "LINK2",
+			"guid": "guidText2",
+			"pubDate": "Date2"
+		}
+	]
+}
