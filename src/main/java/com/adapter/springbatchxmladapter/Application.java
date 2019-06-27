@@ -6,6 +6,11 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 import com.adapter.util.FileReadWriteUtil;
 
+/**  
+* Application.java -  to launch the application  
+* @author  Vikas Singh
+* @version 1.0 
+*/ 
 @SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
 public class Application {
 	

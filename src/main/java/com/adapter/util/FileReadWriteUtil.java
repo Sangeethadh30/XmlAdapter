@@ -1,43 +1,74 @@
 package com.adapter.util;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
-import org.w3c.dom.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.json.simple.parser.JSONParser;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.xml.XMLConstants;
-import javax.xml.parsers.*;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
-
-import java.io.*;
-
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.adapter.model.RequestModel;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-
+/**  
+* FileReadWriteUtil.java - This utility class handles JSON and XML read write functions 
+* @author  Vikas Singh
+* @version 1.0 
+*/ 
 public class FileReadWriteUtil {
 	
-	public JSONObject readJson() {
-        Object obj = null;
-        JSONParser parser = new JSONParser();
+	 /**  
+	    * Read JSON file 
+	    * map to RequestModel POJO class  
+	  */  
+	public void readJson() {
+        /*Object obj = null;
+        JSONParser parser = new JSONParser();*/
 		try {
-			obj = parser.parse(new FileReader("C:\\Sangeetha\\XMLJob\\XMLAdapter\\XmlAdapter\\src\\main\\resources\\input.json"));
-		} catch (ParseException | IOException e) {
+			/*obj = parser.parse(new FileReader("C:\\Sangeetha\\XMLJob\\XMLAdapter\\XmlAdapter\\src\\main\\resources\\input.json"));
+	        JSONObject jo = (JSONObject) obj;
+	        System.out.println(jo.get("channel"));*/
+	        
+	        JsonFactory factory = new JsonFactory();
+	
+	        ObjectMapper mapper = new ObjectMapper(factory);
+	        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+	        JsonNode rootNode = mapper.readTree(new FileReader("C:\\Sangeetha\\XMLJob\\XMLAdapter\\XmlAdapter\\src\\main\\resources\\input.json"));  
+	
+	        Iterator<Map.Entry<String,JsonNode>> fieldsIterator = rootNode.fields();
+	        List<RequestModel> reqList = new ArrayList<>();
+	        while (fieldsIterator.hasNext()) {
+	            Map.Entry<String,JsonNode> field = fieldsIterator.next();
+	            RequestModel newReqModel = mapper.treeToValue(field.getValue(), RequestModel.class);
+	            reqList.add(newReqModel);
+	            System.out.println("Key: " + field.getKey() + "\tValue:" + field.getValue());
+        }
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-        JSONObject jo = (JSONObject) obj;
-        System.out.println(jo.get("channel"));
-        return jo;
 	}
 	
+	/**  
+	    * this metos Reads the XML file 
+	    * helps in finding XML attributes  
+	  */ 
 	public void readXMl() {
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = null;
