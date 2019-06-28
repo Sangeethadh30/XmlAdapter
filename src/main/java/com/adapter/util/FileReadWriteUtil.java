@@ -37,7 +37,8 @@ public class FileReadWriteUtil {
 	    * Read JSON file 
 	    * map to RequestModel POJO class  
 	  */  
-	public void readJson() {
+	public List<RequestModel> readJson() {
+		List<RequestModel> reqList = new ArrayList<>();
         /*Object obj = null;
         JSONParser parser = new JSONParser();*/
 		try {
@@ -52,7 +53,6 @@ public class FileReadWriteUtil {
 	        JsonNode rootNode = mapper.readTree(new FileReader("C:\\Sangeetha\\XMLJob\\XMLAdapter\\XmlAdapter\\src\\main\\resources\\input.json"));  
 	
 	        Iterator<Map.Entry<String,JsonNode>> fieldsIterator = rootNode.fields();
-	        List<RequestModel> reqList = new ArrayList<>();
 	        while (fieldsIterator.hasNext()) {
 	            Map.Entry<String,JsonNode> field = fieldsIterator.next();
 	            RequestModel newReqModel = mapper.treeToValue(field.getValue(), RequestModel.class);
@@ -63,13 +63,14 @@ public class FileReadWriteUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
+		return reqList;
 	}
 	
 	/**  
 	    * this metos Reads the XML file 
 	    * helps in finding XML attributes  
 	  */ 
-	public void readXMl() {
+	public void readXMl(List<RequestModel> reqList) {
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = null;
 		Document document;

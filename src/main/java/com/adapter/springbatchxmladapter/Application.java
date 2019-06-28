@@ -1,9 +1,12 @@
 package com.adapter.springbatchxmladapter;
 
+import java.util.List;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
+import com.adapter.model.RequestModel;
 import com.adapter.util.FileReadWriteUtil;
 
 /**  
@@ -19,7 +22,7 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 		System.out.println("Running successfully>>>>>>>>>>");
 		FileReadWriteUtil fileUtil = new FileReadWriteUtil();
-		fileUtil.readJson();
-		fileUtil.readXMl();
+		List<RequestModel> reqList = fileUtil.readJson();
+		fileUtil.readXMl(reqList);
 	}
 }
