@@ -1,0 +1,8 @@
+{"channel": {
+		"originalName":"color_swatch",
+		"proposedName": "COLORS",
+		"index": "1",
+		"parentNode": "/rss/catalog/product[@description=\"Cardigan Sweater\"]/catalog_item[2]//size[4]",
+		"attributes":"all"
+	}
+}
