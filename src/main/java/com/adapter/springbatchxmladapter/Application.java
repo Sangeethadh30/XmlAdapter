@@ -23,6 +23,6 @@ public class Application {
 		System.out.println("Running successfully>>>>>>>>>>");
 		FileReadWriteUtil fileUtil = new FileReadWriteUtil();
 		List<RequestModel> reqList = fileUtil.readJson();
-		fileUtil.readXMl(reqList);
+		fileUtil.readAndExtractXML(reqList);
 	}
 }

@@ -11,10 +11,16 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 
 import org.json.simple.parser.JSONParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -50,7 +56,7 @@ public class FileReadWriteUtil {
 	
 	        ObjectMapper mapper = new ObjectMapper(factory);
 	        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-	        JsonNode rootNode = mapper.readTree(new FileReader("C:\\Sangeetha\\XMLJob\\XMLAdapter\\XmlAdapter\\src\\main\\resources\\input.json"));  
+	        JsonNode rootNode = mapper.readTree(new FileReader("C:\\Sangeetha\\XMLJob\\XMLAdapter\\XmlAdapter\\src\\main\\resources\\input1.json"));  
 	
 	        Iterator<Map.Entry<String,JsonNode>> fieldsIterator = rootNode.fields();
 	        while (fieldsIterator.hasNext()) {
@@ -70,7 +76,7 @@ public class FileReadWriteUtil {
 	    * this metos Reads the XML file 
 	    * helps in finding XML attributes  
 	  */ 
-	public void readXMl(List<RequestModel> reqList) {
+	public void readXMl() {
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = null;
 		Document document;
@@ -99,6 +105,109 @@ public class FileReadWriteUtil {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+	}
+	public void readXMl(List<RequestModel> reqList) {
+		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = null;
+		Document document;
+		try {
+			builder = docFactory.newDocumentBuilder();
+//			document = builder.parse(new URL("https://www.ft.com/?format=rss").openStream());
+			document = builder.parse(new File("C:\\Sangeetha\\XMLJob\\XMLAdapter\\XmlAdapter\\src\\main\\resources\\sampleInput1.xml"));
+			int i =0;
+			Element root = document.getDocumentElement();
+			for(RequestModel requestModel:reqList) {
+				String originalName = requestModel.getOriginalName();
+				String configParentName = requestModel.getParentNode();
+				int index = 0;
+
+			NodeList nodeList = document.getElementsByTagName(originalName);
+			 for (int count = 0; count < nodeList.getLength(); count++) {
+				 //System.out.println("Nodelist Length : "+ nodeList.getLength());
+				 Node tempNode = nodeList.item(count);
+				 String xmlParentName = tempNode.getParentNode().getNodeName();
+				 if(xmlParentName.equalsIgnoreCase(configParentName))
+				 {
+					 if(index >0)
+					 {
+						i = i + 1;
+						tempNode =  getTempNodeForIndexElement(i,tempNode,index);
+					 }
+					 if(tempNode != null) {
+				System.out.println("nodeName "+tempNode.getNodeName() + "   ParentNode :" + tempNode.getParentNode().getNodeName());
+				System.out.println("nodeValue "+tempNode.getTextContent());
+					 }
+				 }
+				 if (tempNode.hasAttributes()) {
+						// get attributes names and values
+						NamedNodeMap nodeMap = tempNode.getAttributes();
+						for (int p = 0; p < nodeMap.getLength(); p++) {
+							Node node = nodeMap.item(p);
+							System.out.println("attr name : " + node.getNodeName());
+							System.out.println("attr value : " + node.getNodeValue());
+						}
+					}
+			}
+			
+		}
+		}catch (ParserConfigurationException | SAXException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+	}
+	
+	public void readAndExtractXML(List<RequestModel> reqList) {
+		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = null;
+		Document document;
+		try {
+			builder = docFactory.newDocumentBuilder();
+//			document = builder.parse(new URL("https://www.ft.com/?format=rss").openStream());
+			document = builder.parse(new File("C:\\Sangeetha\\XMLJob\\XMLAdapter\\XmlAdapter\\src\\main\\resources\\sampleInput1.xml"));
+			int i =0;
+			Element root = document.getDocumentElement();
+			for(RequestModel requestModel:reqList) {
+				String originalName = requestModel.getOriginalName();
+				int index = requestModel.getItemIndex();
+				String configParentName = requestModel.getParentNode();
+				XPathFactory xPathfactory = XPathFactory.newInstance();
+				XPath xpath = xPathfactory.newXPath();
+				XPathExpression expr = xpath.compile(configParentName);
+				NodeList nodeList =  (NodeList)expr.evaluate(document, XPathConstants.NODE);
+				String red = (String) expr.evaluate(document, XPathConstants.STRING);
+				System.out.println(red);
+//				NodeList nodeList = document.getElementsByTagName(originalName);
+				 for (int count = 0; count < nodeList.getLength(); count++) {
+					 Node node = nodeList.item(count);
+					 if(node.hasAttributes()) {
+						System.out.println("attr name : " + node.getNodeName());
+						System.out.println("attr value : " + node.getTextContent());
+						NamedNodeMap nodeMap = node.getAttributes();
+						for (int p = 0; p < nodeMap.getLength(); p++) {
+							Node attrNode = nodeMap.item(p);
+							if(node.hasAttributes()) {
+								System.out.println("attr name : " + attrNode.getNodeName());
+								System.out.println("attr value : " + attrNode.getNodeValue());
+							}
+						}
+					 }
+				 }
+			}
+		}catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+	}
+	private Node getTempNodeForIndexElement(int i, Node tempNode, int index) {
+		if(i != index) {
+			//System.out.println("This is not Index Element");
+			tempNode = null;
+		}
+			
+		return tempNode;
 		
 	}
 

@@ -8,6 +8,7 @@ public class RequestModel {
 	private String originalName;
 	private String proposedName;
 	private String parentNode;
+	private String attributes;
 	private int itemIndex;
 	
 	public String getOriginalName() {
@@ -34,5 +35,10 @@ public class RequestModel {
 	public void setItemIndex(int itemIndex) {
 		this.itemIndex = itemIndex;
 	}
-	
+	public String getAttributes() {
+		return attributes;
+	}
+	public void setAttributes(String attributes) {
+		this.attributes = attributes;
+	}
 }
