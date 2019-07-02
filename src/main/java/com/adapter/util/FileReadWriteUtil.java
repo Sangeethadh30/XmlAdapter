@@ -1,8 +1,10 @@
 package com.adapter.util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -17,7 +19,10 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.mockito.internal.util.StringUtil;
+import org.springframework.util.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -25,7 +30,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.adapter.model.Attributes;
 import com.adapter.model.RequestModel;
+import com.adapter.model.ResponseTagModel;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -38,7 +45,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 * @version 1.0 
 */ 
 public class FileReadWriteUtil {
-	
+	private JSONObject jo = new JSONObject();
 	 /**  
 	    * Read JSON file 
 	    * map to RequestModel POJO class  
@@ -119,7 +126,6 @@ public class FileReadWriteUtil {
 			Element root = document.getDocumentElement();
 			for(RequestModel requestModel:reqList) {
 				String originalName = requestModel.getOriginalName();
-				String configParentName = requestModel.getParentNode();
 				int index = 0;
 
 			NodeList nodeList = document.getElementsByTagName(originalName);
@@ -127,7 +133,8 @@ public class FileReadWriteUtil {
 				 //System.out.println("Nodelist Length : "+ nodeList.getLength());
 				 Node tempNode = nodeList.item(count);
 				 String xmlParentName = tempNode.getParentNode().getNodeName();
-				 if(xmlParentName.equalsIgnoreCase(configParentName))
+				 String configParentName = null;
+				if(xmlParentName.equalsIgnoreCase(configParentName))
 				 {
 					 if(index >0)
 					 {
@@ -168,39 +175,91 @@ public class FileReadWriteUtil {
 			document = builder.parse(new File("C:\\Sangeetha\\XMLJob\\XMLAdapter\\XmlAdapter\\src\\main\\resources\\sampleInput1.xml"));
 			int i =0;
 			Element root = document.getDocumentElement();
+			String inputXpath = "";
+			String singleValue = "";
+			String key = "";
 			for(RequestModel requestModel:reqList) {
-				String originalName = requestModel.getOriginalName();
-				int index = requestModel.getItemIndex();
-				String configParentName = requestModel.getParentNode();
+				String proposedName = requestModel.getProposedName();
 				XPathFactory xPathfactory = XPathFactory.newInstance();
 				XPath xpath = xPathfactory.newXPath();
-				XPathExpression expr = xpath.compile(configParentName);
+				inputXpath = requestModel.getxPath();
+				XPathExpression expr = xpath.compile(inputXpath);
+				
+				if(inputXpath.endsWith("text()")) {
+					singleValue = (String) expr.evaluate(document, XPathConstants.STRING);
+					if(StringUtils.isEmpty(proposedName))
+						key = requestModel.getOriginalName();
+					else
+						key = proposedName;
+					mapToJson(key,singleValue);
+					break;
+				}
+				
 				NodeList nodeList =  (NodeList)expr.evaluate(document, XPathConstants.NODE);
-				String red = (String) expr.evaluate(document, XPathConstants.STRING);
-				System.out.println(red);
-//				NodeList nodeList = document.getElementsByTagName(originalName);
+				List<ResponseTagModel> tagModelList = new ArrayList<>();
+				List<Attributes> attributesList = null;
 				 for (int count = 0; count < nodeList.getLength(); count++) {
+					 attributesList = new ArrayList<>();
+					 ResponseTagModel tagModel = new ResponseTagModel();
+					 Attributes attributes = null;
 					 Node node = nodeList.item(count);
 					 if(node.hasAttributes()) {
+						 tagModel.setTagName(node.getNodeName());
+						 tagModel.setTextValue(node.getTextContent());
 						System.out.println("attr name : " + node.getNodeName());
 						System.out.println("attr value : " + node.getTextContent());
 						NamedNodeMap nodeMap = node.getAttributes();
 						for (int p = 0; p < nodeMap.getLength(); p++) {
 							Node attrNode = nodeMap.item(p);
 							if(node.hasAttributes()) {
+								attributes = new Attributes();
+								attributes.setAttrName(attrNode.getNodeName());
+								attributes.setAttrValue(attrNode.getNodeValue());
 								System.out.println("attr name : " + attrNode.getNodeName());
 								System.out.println("attr value : " + attrNode.getNodeValue());
+								attributesList.add(attributes);
 							}
+							tagModel.setAttributes(attributesList);
 						}
+						
 					 }
 				 }
+				 if(StringUtils.isEmpty(proposedName))
+						key = requestModel.getOriginalName();
+					else
+						key = proposedName;
+					mapToJson(key,tagModelList);
 			}
+			writeToJson();
 		}catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
 	}
+	private void writeToJson() {
+		PrintWriter pw;
+		try {
+			pw = new PrintWriter("JSONExample.json");
+			pw.write(jo.toJSONString()); 
+	          
+	        pw.flush(); 
+	        pw.close(); 
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}
+
+	private void mapToJson(String key,String value) {
+		jo.put(key, value);
+		
+	}
+	private void mapToJson(String key,List<ResponseTagModel> value) {
+		jo.put(key, value);
+		
+	}
+
 	private Node getTempNodeForIndexElement(int i, Node tempNode, int index) {
 		if(i != index) {
 			//System.out.println("This is not Index Element");

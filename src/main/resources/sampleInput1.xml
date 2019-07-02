@@ -24,6 +24,7 @@
          </size>
          <size description="Medium">
             <color_swatch image="red_cardigan.jpg">Red</color_swatch>
+             <color_swatch source="google">GOOGLE</color_swatch>
             <color_swatch image="navy_cardigan.jpg">Navy</color_swatch>
             <color_swatch image="burgundy_cardigan.jpg">Burgundy</color_swatch>
             <color_swatch image="black_cardigan.jpg">Black</color_swatch>
@@ -34,7 +35,7 @@
          </size>
          <size description="Extra Large">
             <color_swatch image="burgundy_cardigan.jpg">Burgundy</color_swatch>
-            <color_swatch image="black_cardigan.jpg">Black</color_swatch>
+            <color_swatch source="google">GOOGLE</color_swatch>
          </size>
       </catalog_item>
    </product>
