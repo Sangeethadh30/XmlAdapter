@@ -22,7 +22,6 @@ import javax.xml.xpath.XPathFactory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.mockito.internal.util.StringUtil;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.w3c.dom.Document;
@@ -70,7 +69,7 @@ public class FileReadWriteUtil {
 	
 	        ObjectMapper mapper = new ObjectMapper(factory);
 	        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-	        JsonNode rootNode = mapper.readTree(new FileReader("C:\\Sangeetha\\XMLJob\\XMLAdapter\\XmlAdapter\\src\\main\\resources\\input1.json"));  
+	        JsonNode rootNode = mapper.readTree(new FileReader("C:\\XML Job\\Workspace\\XmlAdapter\\src\\main\\resources\\input1.json"));  
 	
 	        Iterator<Map.Entry<String,JsonNode>> fieldsIterator = rootNode.fields();
 	        while (fieldsIterator.hasNext()) {
@@ -180,7 +179,7 @@ public class FileReadWriteUtil {
 		try {
 			builder = docFactory.newDocumentBuilder();
 //			document = builder.parse(new URL("https://www.ft.com/?format=rss").openStream());
-			document = builder.parse(new File("C:\\Sangeetha\\XMLJob\\XMLAdapter\\XmlAdapter\\src\\main\\resources\\sampleInput1.xml"));
+			document = builder.parse(new File("C:\\XML Job\\Workspace\\XmlAdapter\\src\\main\\resources\\sampleInput1.xml"));
 			int i =0;
 			Element root = document.getDocumentElement();
 			String inputXpath = "";
@@ -193,6 +192,7 @@ public class FileReadWriteUtil {
 				XPathFactory xPathfactory = XPathFactory.newInstance();
 				XPath xpath = xPathfactory.newXPath();
 				NodeList nodeList = null;
+				int nodeListCount = 0;
 				inputXpath = requestModel.getxPath();
 				if(!StringUtils.isEmpty(inputXpath)) {
 					XPathExpression expr = xpath.compile(inputXpath);
@@ -209,8 +209,13 @@ public class FileReadWriteUtil {
 				}
 				List<ResponseTagModel> tagModelList = new ArrayList<>();
 				List<Attributes> attributesList = null;
+				if(requestModel.getNoOfChilds().equalsIgnoreCase("all"))
+					nodeListCount = nodeList.getLength();
+				else {
+					nodeListCount = Integer.parseInt(requestModel.getNoOfChilds());
+				}
 				if(nodeList != null && nodeList.getLength()>0) {
-					for (int count = 0; count < nodeList.getLength(); count++) {
+					for (int count = 0; count <nodeListCount;  count++) {
 						 attributesList = new ArrayList<>();
 						 ResponseTagModel tagModel = new ResponseTagModel();
 						 Attributes attributes = null;
@@ -237,11 +242,7 @@ public class FileReadWriteUtil {
 								tagModel.setAttributes(attributesList);
 								tagModelList.add(tagModel);
 //								jo.put(attrNode.getNodeName(),attrNode.getNodeValue());		
-//								joArray.add(jo); 
-								if(requestModel.getNoOfChilds().equalsIgnoreCase("all"))
-									continue;
-								else if(Integer.parseInt(requestModel.getNoOfChilds()) == p-1)
-									break;
+//								joArray.add(jo);								
 							}
 							
 						 }
@@ -279,8 +280,9 @@ public class FileReadWriteUtil {
 
 	@SuppressWarnings("unchecked")
 	private void mapToJson(String key,String value) {
-		mainJo.put(key, value);
-		
+		//mainJo.put(key, value);
+		Gson gson = new Gson();
+		jo.put(key, gson.toJson(value));
 	}
 	@SuppressWarnings("unchecked")
 	private void mapToJson(String key,List<ResponseTagModel> value) {
