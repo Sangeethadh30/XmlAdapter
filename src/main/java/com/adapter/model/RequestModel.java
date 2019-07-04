@@ -11,7 +11,7 @@ public class RequestModel {
 	private String originalName;
 	private String proposedName;
 	private String xPath;
-	private int noOfChilds;
+	private String noOfChilds;
 	private List<Attributes> attributes;
 	
 	public String getOriginalName() {
@@ -26,14 +26,14 @@ public class RequestModel {
 	public void setProposedName(String proposedName) {
 		this.proposedName = proposedName;
 	}
-	public int getNoOfChilds() {
-		return noOfChilds;
-	}
-	public void setNoOfChilds(int noOfChilds) {
-		this.noOfChilds = noOfChilds;
-	}
 	public List<Attributes> getAttributes() {
 		return attributes;
+	}
+	public String getNoOfChilds() {
+		return noOfChilds;
+	}
+	public void setNoOfChilds(String noOfChilds) {
+		this.noOfChilds = noOfChilds;
 	}
 	public void setAttributes(List<Attributes> attributes) {
 		this.attributes = attributes;

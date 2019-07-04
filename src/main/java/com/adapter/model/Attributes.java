@@ -2,7 +2,7 @@ package com.adapter.model;
 
 public class Attributes {
 	private String attrName;
-	private String attrValue;
+	private String attrNewValue;
 	
 	public String getAttrName() {
 		return attrName;
@@ -10,12 +10,11 @@ public class Attributes {
 	public void setAttrName(String attrName) {
 		this.attrName = attrName;
 	}
-	public String getAttrValue() {
-		return attrValue;
+	public String getAttrNewValue() {
+		return attrNewValue;
 	}
-	public void setAttrValue(String attrValue) {
-		this.attrValue = attrValue;
+	public void setAttrNewValue(String attrNewValue) {
+		this.attrNewValue = attrNewValue;
 	}
-	
 
 }
