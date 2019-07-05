@@ -19,6 +19,6 @@
 		"originalName":"item_number",
 		"proposedName": "ItemNumber",
 		"noOfChilds":"all",
-		"xPath":"/rss/catalog/product[@description=\"Cardigan Sweater\"]/catalog_item[2]/item_number/text()"
+		"xpath":"/rss/catalog/product[@description=\"Cardigan Sweater\"]/catalog_item[2]/item_number/text()"
 	}
 }
