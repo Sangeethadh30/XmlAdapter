@@ -24,11 +24,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.*;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.adapter.model.Attributes;
@@ -153,8 +149,7 @@ public class FileReadWriteUtil {
 									newAttrValue = attrNode.getNodeName();
 									if (!CollectionUtils.isEmpty(requestModel.getAttributes()) && !StringUtils
 											.isEmpty(requestModel.getAttributes().get(p).getAttrNewValue()))
-										newAttrValue = getNewAttributeValue(attrNode.getNodeName(),
-												requestModel.getAttributes());
+										newAttrValue = getNewAttributeValue(attrNode.getNodeName(),requestModel);
 									attributes.setAttrName(newAttrValue);
 									attributes.setAttrNewValue(attrNode.getNodeValue());
 									System.out.println("attr name : " + attrNode.getNodeName());
@@ -187,12 +182,16 @@ public class FileReadWriteUtil {
 
 	}
 
-	private String getNewAttributeValue(String oldAtrributeName, List<Attributes> attributes) {
+	private String getNewAttributeValue(String oldAtrributeName, RequestModel requestModel) {
 		String newsAttributeValue = oldAtrributeName;
-		for (int i = 0; i < attributes.size(); i++) {
-			if (oldAtrributeName.equals(attributes.get(i).getAttrName())) {
-				newsAttributeValue = attributes.get(i).getAttrNewValue();
-				break;
+		if (!CollectionUtils.isEmpty(requestModel.getAttributes())
+				&& !StringUtils.isEmpty(requestModel.getAttributes())) {
+
+			for (int i = 0; i < requestModel.getAttributes().size(); i++) {
+				if (oldAtrributeName.equals(requestModel.getAttributes().get(i).getAttrName())) {
+					newsAttributeValue = requestModel.getAttributes().get(i).getAttrNewValue();
+					break;
+				}
 			}
 		}
 		return newsAttributeValue;
@@ -266,6 +265,11 @@ public class FileReadWriteUtil {
 			XPath xpath = xPathfactory.newXPath();
 			XPathExpression compile = xpath.compile(xpathExpression);
 			NodeList nodeList = (NodeList) compile.evaluate(document, XPathConstants.NODESET);
+			/*
+			 * if (requestModel.getNoOfChilds().equalsIgnoreCase("all")) nodeListCount =
+			 * nodeList.getLength(); else { nodeListCount =
+			 * Integer.parseInt(requestModel.getNoOfChilds()); }
+			 */
 			displayNodeList(nodeList, requestModel);
 			writeToJson();
 		}
@@ -302,7 +306,7 @@ public class FileReadWriteUtil {
 		String key = "";
 		List<ResponseTagModel> tagModelList = new ArrayList<>();
 		String newAttrValue = "";
-
+		
 		for (int j = 0; j < childNodes.getLength(); j++) {
 
 			Node child = childNodes.item(j);
@@ -314,11 +318,11 @@ public class FileReadWriteUtil {
 
 					for (int p = 0; p < nodeMap.getLength(); p++) {
 						Node attrNode = nodeMap.item(p);
-						attributes = new Attributes();
 						newAttrValue = attrNode.getNodeName();
 						if (!CollectionUtils.isEmpty(requestModel.getAttributes())
 								&& !StringUtils.isEmpty(requestModel.getAttributes().get(p).getAttrNewValue()))
-							newAttrValue = getNewAttributeValue(attrNode.getNodeName(), requestModel.getAttributes());
+							newAttrValue = getNewAttributeValue(attrNode.getNodeName(), requestModel);
+						attributes = new Attributes();
 						attributes.setAttrName(newAttrValue);
 						attributes.setAttrNewValue(attrNode.getNodeValue());
 						System.out.println("attr name : " + attrNode.getNodeName());
@@ -328,20 +332,28 @@ public class FileReadWriteUtil {
 						tagModel.setAttributes(attributesList);
 						tagModelList.add(tagModel);
 					}
-				}else {
+				} if (child.hasChildNodes()){
+					newAttrValue = getNewAttributeValue(child.getNodeName(), requestModel);
 					attributes = new Attributes();
-					attributes.setAttrName(child.getNodeName());
-					attributes.setAttrNewValue(child.getNodeValue());
-					attributesList.add(attributes);
+					attributes.setAttrName(newAttrValue);
+					attributes.setAttrNewValue(child.getTextContent());
+					attributesList.add(attributes);		
 					tagModel.setAttributes(attributesList);
-					tagModelList.add(tagModel);
 				}
+				
 			}
 		}
 		if (StringUtils.isEmpty(proposedName))
 			key = requestModel.getOriginalName();
 		else
 			key = proposedName;
-		mapToJson(key, tagModelList);
+		mapToJson(key, tagModel);
+	}
+
+	@SuppressWarnings("unchecked")
+	private void mapToJson(String key, ResponseTagModel tagModel) {
+		Gson gson = new Gson();
+		jo.put(key, gson.toJson(tagModel));
+		
 	}
 }
