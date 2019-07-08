@@ -1,18 +1,20 @@
-{"channel": {
-		"originalName":"channel",
-		"proposedName": "ChannelHeading",
-		"parentNode": "root",
-		"index": "0"
+{"item1": {
+		"originalName":"size",
+		"proposedName": "Length",
+		"noOfChilds":"all",
+		"xPath":"/rss/inventory/book[2]"
 	},
-	"title":{
-		"originalName":"channel",
-		"proposedName": "heading",
-		"parentNode": "root",
-		"index": "0"
+	"item2": {
+		"originalName":"size",
+		"proposedName": "COLORSSize",
+		"noOfChilds":"all",
+		"xPath":"/rss/inventory/book[1]/publisher"
+		
 	},
-	"guid":{
-		"proposedName": "guidText",
-		"parentNode": "item",
-		"index": "2"
+	"item3": {
+		"originalName":"item_number",
+		"proposedName": "ItemNumber",
+		"noOfChilds":"all",
+		"xPath":"/rss/inventory"
 	}
 }

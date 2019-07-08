@@ -259,14 +259,15 @@ public class FileReadWriteUtil {
 
 		for (RequestModel requestModel : reqList) {
 			document = builder
-					.parse(new File("C:\\XML Job\\Workspace\\XmlAdapter\\src\\main\\resources\\sampleInput1.xml"));
+					.parse(new File("C:\\XML Job\\Workspace\\XmlAdapter\\src\\main\\resources\\sampleInput.xml"));
 
-			String xpathExpression = "/rss/catalog/product[@description=\"Cardigan Sweater\"]/catalog_item[2]//size[2]";
+			String xpathExpression = requestModel.getxPath();
 			XPathFactory xPathfactory = XPathFactory.newInstance();
 			XPath xpath = xPathfactory.newXPath();
 			XPathExpression compile = xpath.compile(xpathExpression);
 			NodeList nodeList = (NodeList) compile.evaluate(document, XPathConstants.NODESET);
 			displayNodeList(nodeList, requestModel);
+			writeToJson();
 		}
 
 	}
@@ -335,7 +336,6 @@ public class FileReadWriteUtil {
 		else
 			key = proposedName;
 		mapToJson(key, tagModelList);
-
+		
 	}
-
 }
