@@ -63,7 +63,7 @@ public class FileReadWriteUtil {
 			ObjectMapper mapper = new ObjectMapper(factory);
 			mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			JsonNode rootNode = mapper
-					.readTree(new FileReader("C:\\XML Job\\Workspace\\XmlAdapter\\src\\main\\resources\\input1.json"));
+					.readTree(new FileReader("C:\\XML Job\\Workspace\\XmlAdapter\\src\\main\\resources\\input.json"));
 
 			Iterator<Map.Entry<String, JsonNode>> fieldsIterator = rootNode.fields();
 			while (fieldsIterator.hasNext()) {
@@ -328,6 +328,13 @@ public class FileReadWriteUtil {
 						tagModel.setAttributes(attributesList);
 						tagModelList.add(tagModel);
 					}
+				}else {
+					attributes = new Attributes();
+					attributes.setAttrName(child.getNodeName());
+					attributes.setAttrNewValue(child.getNodeValue());
+					attributesList.add(attributes);
+					tagModel.setAttributes(attributesList);
+					tagModelList.add(tagModel);
 				}
 			}
 		}
@@ -336,6 +343,5 @@ public class FileReadWriteUtil {
 		else
 			key = proposedName;
 		mapToJson(key, tagModelList);
-		
 	}
 }
