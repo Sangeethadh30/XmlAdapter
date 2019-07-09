@@ -59,7 +59,8 @@ public class FileReadWriteUtil {
 			ObjectMapper mapper = new ObjectMapper(factory);
 			mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			JsonNode rootNode = mapper
-					.readTree(new FileReader("C:\\XML Job\\Workspace\\XmlAdapter\\src\\main\\resources\\input.json"));
+					.readTree(new File(
+							getClass().getClassLoader().getResource("input1.json").getFile()));
 
 			Iterator<Map.Entry<String, JsonNode>> fieldsIterator = rootNode.fields();
 			while (fieldsIterator.hasNext()) {
@@ -86,7 +87,7 @@ public class FileReadWriteUtil {
 			builder = docFactory.newDocumentBuilder();
 //			document = builder.parse(new URL("https://www.ft.com/?format=rss").openStream());
 			document = builder
-					.parse(new File("C:\\XML Job\\Workspace\\XmlAdapter\\src\\main\\resources\\sampleInput.xml"));
+					.parse(new File(getClass().getClassLoader().getResource("sampleInput1.xml").getFile()));
 
 			String inputXpath = "";
 			String singleValue = "";
@@ -246,32 +247,33 @@ public class FileReadWriteUtil {
 
 	}
 
-	public void readXML(List<RequestModel> reqList)
-			throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
+	public void readXML(List<RequestModel> reqList){
+		try {
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = null;
+			Document document;
 
-		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = null;
-		Document document;
+			builder = docFactory.newDocumentBuilder();
+//			document = builder.parse(new URL("https://www.ft.com/?format=rss").openStream());
 
-		builder = docFactory.newDocumentBuilder();
-//		document = builder.parse(new URL("https://www.ft.com/?format=rss").openStream());
-
-		for (RequestModel requestModel : reqList) {
-			document = builder
-					.parse(new File("C:\\XML Job\\Workspace\\XmlAdapter\\src\\main\\resources\\sampleInput.xml"));
-
-			String xpathExpression = requestModel.getxPath();
-			XPathFactory xPathfactory = XPathFactory.newInstance();
-			XPath xpath = xPathfactory.newXPath();
-			XPathExpression compile = xpath.compile(xpathExpression);
-			NodeList nodeList = (NodeList) compile.evaluate(document, XPathConstants.NODESET);
-			/*
-			 * if (requestModel.getNoOfChilds().equalsIgnoreCase("all")) nodeListCount =
-			 * nodeList.getLength(); else { nodeListCount =
-			 * Integer.parseInt(requestModel.getNoOfChilds()); }
-			 */
-			displayNodeList(nodeList, requestModel);
-			writeToJson();
+			for (RequestModel requestModel : reqList) {
+				document = builder
+						.parse(new File(getClass().getClassLoader().getResource("sampleInput1.xml").getFile()));
+				String xpathExpression = requestModel.getxPath();
+				XPathFactory xPathfactory = XPathFactory.newInstance();
+				XPath xpath = xPathfactory.newXPath();
+				XPathExpression compile = xpath.compile(xpathExpression);
+				NodeList nodeList = (NodeList) compile.evaluate(document, XPathConstants.NODESET);
+				/*
+				 * if (requestModel.getNoOfChilds().equalsIgnoreCase("all")) nodeListCount =
+				 * nodeList.getLength(); else { nodeListCount =
+				 * Integer.parseInt(requestModel.getNoOfChilds()); }
+				 */
+				displayNodeList(nodeList, requestModel);
+				writeToJson();
+			}
+		} catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -299,16 +301,18 @@ public class FileReadWriteUtil {
 	}
 
 	private void getChildNodeAndAttribute(NodeList childNodes, RequestModel requestModel) {
-		List<Attributes> attributesList = new ArrayList<>();
-		ResponseTagModel tagModel = new ResponseTagModel();
+		List<Attributes> attributesList = null;
+		ResponseTagModel tagModel = null;
 		String proposedName = requestModel.getProposedName();
 		Attributes attributes = null;
 		String key = "";
 		List<ResponseTagModel> tagModelList = new ArrayList<>();
 		String newAttrValue = "";
-		
+		int noOfChildcount = 1; 
+		boolean restrictChildNodes = calculateNoOfChilds(requestModel.getNoOfChilds());
 		for (int j = 0; j < childNodes.getLength(); j++) {
-
+			attributesList = new ArrayList<>();
+			tagModel = new ResponseTagModel();
 			Node child = childNodes.item(j);
 			short nodeType = child.getNodeType();
 			if (nodeType == 1) {
@@ -328,26 +332,41 @@ public class FileReadWriteUtil {
 						System.out.println("attr name : " + attrNode.getNodeName());
 						System.out.println("attr value : " + attrNode.getNodeValue());
 						attributesList.add(attributes);
-
-						tagModel.setAttributes(attributesList);
-						tagModelList.add(tagModel);
 					}
-				} if (child.hasChildNodes()){
+					tagModel.setAttributes(attributesList);
+					if (child.hasChildNodes()){
+						tagModel.setTextValue(child.getTextContent());
+						newAttrValue = getNewAttributeValue(child.getNodeName(), requestModel);
+						tagModel.setTagName(newAttrValue);
+					}
+					tagModelList.add(tagModel);
+					if(restrictChildNodes && noOfChildcount == Integer.parseInt(requestModel.getNoOfChilds()))
+						break;
+					else 
+						noOfChildcount++;
+				} /*if (child.hasChildNodes()){
+					tagModel.setTextValue(child.getTextContent());
 					newAttrValue = getNewAttributeValue(child.getNodeName(), requestModel);
+					tagModel.setTagName(newAttrValue);
 					attributes = new Attributes();
 					attributes.setAttrName(newAttrValue);
 					attributes.setAttrNewValue(child.getTextContent());
 					attributesList.add(attributes);		
 					tagModel.setAttributes(attributesList);
-				}
-				
+				}*/
 			}
 		}
 		if (StringUtils.isEmpty(proposedName))
 			key = requestModel.getOriginalName();
 		else
 			key = proposedName;
-		mapToJson(key, tagModel);
+		mapToJson(key, tagModelList);
+	}
+
+	private boolean calculateNoOfChilds(String childCount) {
+		if(childCount.equalsIgnoreCase("all"))
+				return false;
+		return true;
 	}
 
 	@SuppressWarnings("unchecked")

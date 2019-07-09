@@ -1,24 +1,17 @@
-{"item1": {
-		"originalName":"size",
-		"proposedName": "Length",
-		"noOfChilds":"2",
-		"xPath":"/rss/catalog/product[@description=\"Cardigan Sweater\"]/catalog_item[2]//size[1]"
-		
-	},
-	"item2": {
-		"originalName":"size",
-		"proposedName": "COLORSSize",
-		"noOfChilds":"all",
-		"xPath":"/rss/catalog/product[@description=\"Cardigan Sweater\"]/catalog_item[2]//size[2]",
-		"attributes":[
-				{ "attrName": "image", "attrNewValue": "picture" },
-				{ "attrName": "source", "attrNewValue": "sourceOfInfo" }
-			]
-	},
-	"item3": {
-		"originalName":"item_number",
-		"proposedName": "ItemNumber",
-		"noOfChilds":"all",
-		"xpath":"/rss/catalog/product[@description=\"Cardigan Sweater\"]/catalog_item[2]/item_number/text()"
-	}
+{    "item2": {
+        "originalName":"size",
+        "proposedName": "COLORSSize",
+        "noOfChilds":"2",
+        "xPath":"/rss/catalog/product[@description=\"Cardigan Sweater\"]/catalog_item[2]//size[2]",
+        "attributes":[
+                { "attrName": "image", "attrNewValue": "picture" },
+                { "attrName": "source", "attrNewValue": "sourceOfInfo" }
+            ]
+    },
+    "item3": {
+        "originalName":"item_number",
+        "proposedName": "ItemNumber",
+        "noOfChilds":"1",
+        "xPath":"/rss/catalog/product[@description=\"Cardigan Sweater\"]/catalog_item[2]/item_number/text()"
+    }
 }
