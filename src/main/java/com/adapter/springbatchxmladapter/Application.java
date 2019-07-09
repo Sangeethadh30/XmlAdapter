@@ -20,10 +20,9 @@ public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
-		System.out.println("Running successfully>>>>>>>>>>");
+		System.out.println("Application Running successfully>>>>>>>>>>");
 		FileReadWriteUtil fileUtil = new FileReadWriteUtil();
 		List<RequestModel> reqList = fileUtil.readJson();
-//		fileUtil.readAndExtractXML(reqList);
 		fileUtil.readXML(reqList);
 	}
 }

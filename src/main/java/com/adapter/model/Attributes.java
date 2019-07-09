@@ -1,5 +1,10 @@
 package com.adapter.model;
 
+/**  
+* Attributes.java - a simple attribute class mapped to attribute field of RequestModel json.  
+* @author  Vikas Singh
+* @version 1.0 
+*/ 
 public class Attributes {
 	private String attrName;
 	private String attrNewValue;
