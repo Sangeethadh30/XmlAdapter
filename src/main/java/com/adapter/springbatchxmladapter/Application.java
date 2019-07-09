@@ -1,6 +1,7 @@
 package com.adapter.springbatchxmladapter;
 
 import java.util.List;
+import java.util.Scanner;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,7 +23,13 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 		System.out.println("Application Running successfully>>>>>>>>>>");
 		FileReadWriteUtil fileUtil = new FileReadWriteUtil();
-		List<RequestModel> reqList = fileUtil.readJson();
-		fileUtil.readXML(reqList);
+		@SuppressWarnings("resource")
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter configuration file absolute path:");
+		String jsonFilePath = scanner.nextLine();
+		System.out.println("Enter XML URL:");
+		String xmlUrl = scanner.nextLine();
+		List<RequestModel> reqList = fileUtil.readJson(jsonFilePath);
+		fileUtil.readXML(reqList,xmlUrl);
 	}
 }

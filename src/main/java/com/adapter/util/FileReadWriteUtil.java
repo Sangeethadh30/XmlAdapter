@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -48,16 +49,18 @@ public class FileReadWriteUtil {
 	 * Read JSON file map to RequestModel POJO class
 	 */
 	@JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
-	public List<RequestModel> readJson() {
+	public List<RequestModel> readJson(String jsonFilePath) {
 		List<RequestModel> reqList = new ArrayList<>();
 
 		try {
 			JsonFactory factory = new JsonFactory();
 			ObjectMapper mapper = new ObjectMapper(factory);
 			mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-			JsonNode rootNode = mapper
+			/*JsonNode rootNode = mapper
 					.readTree(new File(
-							getClass().getClassLoader().getResource("input1.json").getFile()));
+							getClass().getClassLoader().getResource("input1.json").getFile()));*/
+			JsonNode rootNode = mapper
+			.readTree(new File(jsonFilePath));
 			Iterator<Map.Entry<String, JsonNode>> fieldsIterator = rootNode.fields();
 			while (fieldsIterator.hasNext()) {
 				Map.Entry<String, JsonNode> field = fieldsIterator.next();
@@ -114,17 +117,17 @@ public class FileReadWriteUtil {
 	/**
 	 * this method Reads the XML file helps in finding XML attributes
 	 */
-	public void readXML(List<RequestModel> reqList){
+	public void readXML(List<RequestModel> reqList,String xmlURL){
 		try {
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = null;
 			Document document;
 
 			builder = docFactory.newDocumentBuilder();
-//			document = builder.parse(new URL("https://www.ft.com/?format=rss").openStream());
+			document = builder.parse(new URL(xmlURL).openStream());
+			/*document = builder
+					.parse(new File(getClass().getClassLoader().getResource("sampleInput1.xml").getFile()));*/
 			for (RequestModel requestModel : reqList) {
-				document = builder
-						.parse(new File(getClass().getClassLoader().getResource("sampleInput1.xml").getFile()));
 				String xpathExpression = requestModel.getxPath();
 				XPathFactory xPathfactory = XPathFactory.newInstance();
 				XPath xpath = xPathfactory.newXPath();
