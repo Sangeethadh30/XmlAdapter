@@ -3,6 +3,6 @@
         "originalName":"item_number",
         "proposedName": "ItemNumber",
         "noOfChilds":"1",
-        "xPath":"/note/body"
+        "xPath":"/rss[@xmlns:dc=\"http://purl.org/dc/elements/1.1/\"]/channel/language/text()"
     }
 }

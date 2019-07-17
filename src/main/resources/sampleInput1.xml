@@ -1,42 +1,253 @@
-<rss>
-<catalog>
-   <product description="Cardigan Sweater" product_image="cardigan.jpg">
-      <catalog_item gender="Men's">
-         <item_number>QWZ5671</item_number>
-         <price>39.95</price>
-         <size description="Medium">
-            <color_swatch image="red_cardigan.jpg">Red</color_swatch>
-            <color_swatch image="burgundy_cardigan.jpg">Burgundy</color_swatch>
-         </size>
-         <size description="Large">
-            <color_swatch image="red_cardigan.jpg">Red</color_swatch>
-            <color_swatch image="burgundy_cardigan.jpg">Burgundy</color_swatch>
-         </size>
-      </catalog_item>
-      <catalog_item gender="Women's">
-         <item_number>RRX9856</item_number>
-         <price>42.50</price>
-         <size description="Small">
-            <color_swatch image="red_cardigan.jpg">Red</color_swatch>
-            <color_swatch image="navy_cardigan.jpg">Navy</color_swatch>
-            <color_swatch image="burgundy_cardigan.jpg">Burgundy</color_swatch>
-         </size>
-         <size description="Medium">
-            <color_swatch image="red_cardigan.jpg">Red</color_swatch>
-             <color_swatch source="google">GOOGLE</color_swatch>
-            <color_swatch image="navy_cardigan.jpg">Navy</color_swatch>
-            <color_swatch image="burgundy_cardigan.jpg">Burgundy</color_swatch>
-            <color_swatch image="black_cardigan.jpg">Black</color_swatch>
-         </size>
-         <size description="Large">
-            <color_swatch image="navy_cardigan.jpg">Navy</color_swatch>
-            <color_swatch image="black_cardigan.jpg">Black</color_swatch>
-         </size>
-         <size description="Extra Large">
-            <color_swatch image="burgundy_cardigan.jpg">Burgundy</color_swatch>
-            <color_swatch source="google">GOOGLE</color_swatch>
-         </size>
-      </catalog_item>
-   </product>
-</catalog>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+<channel>
+<title>
+<![CDATA[ International homepage ]]>
+</title>
+<description>
+<![CDATA[ International homepage ]]>
+</description>
+<link>https://www.ft.com/</link>
+<generator>RSS for Node</generator>
+<lastBuildDate>Tue, 09 Jul 2019 11:18:02 GMT</lastBuildDate>
+<atom:link href="https://www.ft.com/?format=rss" rel="self" type="application/rss+xml"/>
+<copyright>
+<![CDATA[
+© Copyright The Financial Times Ltd 2019. "FT" and "Financial Times" are trademarks of the Financial Times. See http://www.ft.com/servicestools/help/terms#legal1 for the terms and conditions of reuse.
+]]>
+</copyright>
+<language>
+<![CDATA[ en ]]>
+</language>
+<webMaster>
+<![CDATA[ client.support@ft.com (FT Client Support) ]]>
+</webMaster>
+<ttl>15</ttl>
+<category>
+<![CDATA[ Newspapers ]]>
+</category>
+<item>
+<title>
+<![CDATA[
+Trump’s rift with UK ambassador Kim Darroch deepens
+]]>
+</title>
+<description>
+<![CDATA[
+White House disinvites British envoy from dinner after Twitter warning by US president
+]]>
+</description>
+<link>
+https://www.ft.com/content/0b57ad82-a212-11e9-974c-ad1c6ab5efd1
+</link>
+<guid isPermaLink="false">0b57ad82-a212-11e9-974c-ad1c6ab5efd1</guid>
+<pubDate>Tue, 09 Jul 2019 07:45:42 GMT</pubDate>
+</item>
+<item>
+<title>
+<![CDATA[
+Can João Lourenço cure Angola of its crony capitalism?
+]]>
+</title>
+<description>
+<![CDATA[
+The president’s pledge to wash away corruption in the oil-rich state is facing scrutiny
+]]>
+</description>
+<link>
+https://www.ft.com/content/9ccc1df0-9f0d-11e9-9c06-a4640c9feebb
+</link>
+<guid isPermaLink="false">9ccc1df0-9f0d-11e9-9c06-a4640c9feebb</guid>
+<pubDate>Tue, 09 Jul 2019 03:28:32 GMT</pubDate>
+</item>
+<item>
+<title>
+<![CDATA[
+Orange chief Richard acquitted in long-running fraud case
+]]>
+</title>
+<description>
+<![CDATA[
+Paris court clears telecoms company leader of any wrongdoing in Tapie action
+]]>
+</description>
+<link>
+https://www.ft.com/content/2298265c-a226-11e9-974c-ad1c6ab5efd1
+</link>
+<guid isPermaLink="false">2298265c-a226-11e9-974c-ad1c6ab5efd1</guid>
+<pubDate>Tue, 09 Jul 2019 09:00:44 GMT</pubDate>
+</item>
+<item>
+<title>
+<![CDATA[
+US barred Hong Kong consul’s tough speech on protests
+]]>
+</title>
+<description>
+<![CDATA[
+Concern American diplomat’s valedictory address could derail Trump-Xi truce in trade war
+]]>
+</description>
+<link>
+https://www.ft.com/content/ce55c3f8-a1d3-11e9-a282-2df48f366f7d
+</link>
+<guid isPermaLink="false">ce55c3f8-a1d3-11e9-a282-2df48f366f7d</guid>
+<pubDate>Mon, 08 Jul 2019 23:05:09 GMT</pubDate>
+</item>
+<item>
+<title>
+<![CDATA[ Deutsche Bank struggles to silence doubters ]]>
+</title>
+<description>
+<![CDATA[
+Observers praise brutal honesty of restructuring, but investors worry about execution risks
+]]>
+</description>
+<link>
+https://www.ft.com/content/98781f02-a196-11e9-a282-2df48f366f7d
+</link>
+<guid isPermaLink="false">98781f02-a196-11e9-a282-2df48f366f7d</guid>
+<pubDate>Tue, 09 Jul 2019 03:00:29 GMT</pubDate>
+</item>
+<item>
+<title>
+<![CDATA[ Jeffrey Epstein: the mystery behind the financier ]]>
+</title>
+<description>
+<![CDATA[
+US financier charged with sex trafficking of minors is an inscrutable figure with famous friends
+]]>
+</description>
+<link>
+https://www.ft.com/content/8a3be020-a1d4-11e9-974c-ad1c6ab5efd1
+</link>
+<guid isPermaLink="false">8a3be020-a1d4-11e9-974c-ad1c6ab5efd1</guid>
+<pubDate>Tue, 09 Jul 2019 04:15:26 GMT</pubDate>
+</item>
+<item>
+<title>
+<![CDATA[ LinkedIn and the art of boastful self-promotion ]]>
+</title>
+<description>
+<![CDATA[
+The network is home to entertaining posts that expose insecurities and tribalism
+]]>
+</description>
+<link>
+https://www.ft.com/content/6fa4456c-9e6f-11e9-9c06-a4640c9feebb
+</link>
+<guid isPermaLink="false">6fa4456c-9e6f-11e9-9c06-a4640c9feebb</guid>
+<pubDate>Tue, 09 Jul 2019 03:00:28 GMT</pubDate>
+</item>
+<item>
+<title>
+<![CDATA[ Lagarde shows how to deal with imposter syndrome ]]>
+</title>
+<description>
+<![CDATA[
+She may not be the best qualified candidate for ECB chief, but she is not there by chance
+]]>
+</description>
+<link>
+https://www.ft.com/content/13720bc4-a16e-11e9-a282-2df48f366f7d
+</link>
+<guid isPermaLink="false">13720bc4-a16e-11e9-a282-2df48f366f7d</guid>
+<pubDate>Tue, 09 Jul 2019 03:19:38 GMT</pubDate>
+</item>
+<item>
+<title>
+<![CDATA[
+Doc-lite: the new menace in $1.2tn leveraged loan market
+]]>
+</title>
+<description>
+<![CDATA[
+Private equity owners are withholding vital information from loan investors
+]]>
+</description>
+<link>
+https://www.ft.com/content/177b0152-9c74-11e9-9c06-a4640c9feebb
+</link>
+<guid isPermaLink="false">177b0152-9c74-11e9-9c06-a4640c9feebb</guid>
+<pubDate>Tue, 09 Jul 2019 03:00:40 GMT</pubDate>
+</item>
+<item>
+<title>
+<![CDATA[
+Chinese VC spending on US biotech hit by security reviews
+]]>
+</title>
+<description>
+<![CDATA[
+US start-ups face tougher environment as first-half investment drops nearly 60%
+]]>
+</description>
+<link>
+https://www.ft.com/content/6d647f7e-a13a-11e9-974c-ad1c6ab5efd1
+</link>
+<guid isPermaLink="false">6d647f7e-a13a-11e9-974c-ad1c6ab5efd1</guid>
+<pubDate>Mon, 08 Jul 2019 21:00:26 GMT</pubDate>
+</item>
+<item>
+<title>
+<![CDATA[ L’Oréal bucks wider economic slowdown in China ]]>
+</title>
+<description>
+<![CDATA[
+CEO Jean-Paul Agon says young Chinese people have big appetite for luxury brands
+]]>
+</description>
+<link>
+https://www.ft.com/content/4322aca8-a0a0-11e9-974c-ad1c6ab5efd1
+</link>
+<guid isPermaLink="false">4322aca8-a0a0-11e9-974c-ad1c6ab5efd1</guid>
+<pubDate>Tue, 09 Jul 2019 03:00:42 GMT</pubDate>
+</item>
+<item>
+<title>
+<![CDATA[ Romans fume and sweat under mountains of rubbish ]]>
+</title>
+<description>
+<![CDATA[
+Closure of refuse plants for maintenance has caused havoc amid record heatwave
+]]>
+</description>
+<link>
+https://www.ft.com/content/5d650548-a19f-11e9-a282-2df48f366f7d
+</link>
+<guid isPermaLink="false">5d650548-a19f-11e9-a282-2df48f366f7d</guid>
+<pubDate>Tue, 09 Jul 2019 04:00:28 GMT</pubDate>
+</item>
+<item>
+<title>
+<![CDATA[ Borrell faces daunting agenda as EU foreign envoy ]]>
+</title>
+<description>
+<![CDATA[
+Spanish veteran will confront tests from Venezuela to the Balkans as bloc’s influence wanes
+]]>
+</description>
+<link>
+https://www.ft.com/content/01c4bc50-9e85-11e9-9c06-a4640c9feebb
+</link>
+<guid isPermaLink="false">01c4bc50-9e85-11e9-9c06-a4640c9feebb</guid>
+<pubDate>Tue, 09 Jul 2019 04:00:31 GMT</pubDate>
+</item>
+<item>
+<title>
+<![CDATA[
+AeroFarms raises $100m as investors rush to indoor farms
+]]>
+</title>
+<description>
+<![CDATA[
+Vertical farms seek to grow new crops and reduce costs through technology and scale
+]]>
+</description>
+<link>
+https://www.ft.com/content/cac48190-9d8a-11e9-9c06-a4640c9feebb
+</link>
+<guid isPermaLink="false">cac48190-9d8a-11e9-9c06-a4640c9feebb</guid>
+<pubDate>Tue, 09 Jul 2019 03:00:35 GMT</pubDate>
+</item>
+</channel>
 </rss>

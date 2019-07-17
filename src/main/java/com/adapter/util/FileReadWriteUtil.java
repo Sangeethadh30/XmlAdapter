@@ -56,11 +56,11 @@ public class FileReadWriteUtil {
 			JsonFactory factory = new JsonFactory();
 			ObjectMapper mapper = new ObjectMapper(factory);
 			mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-			/*JsonNode rootNode = mapper
-					.readTree(new File(
-							getClass().getClassLoader().getResource("input1.json").getFile()));*/
 			JsonNode rootNode = mapper
-			.readTree(new File(jsonFilePath));
+					.readTree(new File(
+							getClass().getClassLoader().getResource("input1.json").getFile()));
+			/*JsonNode rootNode = mapper
+			.readTree(new File(jsonFilePath));*/
 			Iterator<Map.Entry<String, JsonNode>> fieldsIterator = rootNode.fields();
 			while (fieldsIterator.hasNext()) {
 				Map.Entry<String, JsonNode> field = fieldsIterator.next();
@@ -124,13 +124,22 @@ public class FileReadWriteUtil {
 			Document document;
 
 			builder = docFactory.newDocumentBuilder();
-			document = builder.parse(new URL(xmlURL).openStream());
-			/*document = builder
-					.parse(new File(getClass().getClassLoader().getResource("sampleInput1.xml").getFile()));*/
+			docFactory.setNamespaceAware(true);
+//			document = builder.parse(new URL(xmlURL).openStream());
+			document = builder
+					.parse(new File(getClass().getClassLoader().getResource("sampleInput1.xml").getFile()));
+			new NamespaceResolverutil(document);
 			for (RequestModel requestModel : reqList) {
 				String xpathExpression = requestModel.getxPath();
+				if(xpathExpression.contains("[@xmlns")) {
+					int startIndex = xpathExpression.indexOf("[@xmlns");
+					int endIndex = xpathExpression.indexOf(']');
+					StringBuilder sb = new StringBuilder(xpathExpression);
+					xpathExpression =sb.delete(startIndex, endIndex+1).toString();
+				}
 				XPathFactory xPathfactory = XPathFactory.newInstance();
 				XPath xpath = xPathfactory.newXPath();
+				xpath.setNamespaceContext(new NamespaceResolverutil(document));
 				XPathExpression compile = xpath.compile(xpathExpression);
 				NodeList nodeList = (NodeList) compile.evaluate(document, XPathConstants.NODESET);
 				displayNodeList(nodeList, requestModel);

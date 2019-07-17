@@ -6,6 +6,7 @@ import java.util.Scanner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 
 import com.adapter.model.RequestModel;
 import com.adapter.util.FileReadWriteUtil;
@@ -15,13 +16,14 @@ import com.adapter.util.FileReadWriteUtil;
 * @author  Vikas Singh
 * @version 1.0 
 */ 
-@SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
+//@SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
+@ComponentScan("com.adapter.config")
 public class Application {
 	
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
-		System.out.println("Application Running successfully>>>>>>>>>>");
+		/*System.out.println("Application Running successfully>>>>>>>>>>");
 		FileReadWriteUtil fileUtil = new FileReadWriteUtil();
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
@@ -29,7 +31,7 @@ public class Application {
 		String jsonFilePath = scanner.nextLine();
 		System.out.println("Enter XML URL:");
 		String xmlUrl = scanner.nextLine();
-		List<RequestModel> reqList = fileUtil.readJson(jsonFilePath);
-		fileUtil.readXML(reqList,xmlUrl);
+		List<RequestModel> reqList = fileUtil.readJson(null);
+		fileUtil.readXML(reqList,null);*/
 	}
 }
