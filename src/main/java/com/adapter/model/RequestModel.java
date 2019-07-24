@@ -26,14 +26,14 @@ public class RequestModel {
 	public void setProposedName(String proposedName) {
 		this.proposedName = proposedName;
 	}
-	public List<Attributes> getAttributes() {
-		return attributes;
-	}
 	public String getNoOfChilds() {
 		return noOfChilds;
 	}
 	public void setNoOfChilds(String noOfChilds) {
 		this.noOfChilds = noOfChilds;
+	}
+	public List<Attributes> getAttributes() {
+		return attributes;
 	}
 	public void setAttributes(List<Attributes> attributes) {
 		this.attributes = attributes;

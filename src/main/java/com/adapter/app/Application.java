@@ -1,4 +1,4 @@
-package com.adapter.springbatchxmladapter;
+package com.adapter.app;
 
 import java.util.List;
 import java.util.Scanner;
@@ -16,8 +16,8 @@ import com.adapter.util.FileReadWriteUtil;
 * @author  Vikas Singh
 * @version 1.0 
 */ 
-//@SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
-@ComponentScan("com.adapter.config")
+@SpringBootApplication
+@ComponentScan("com.adapter")
 public class Application {
 	
 

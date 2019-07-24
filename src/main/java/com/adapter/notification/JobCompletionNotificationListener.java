@@ -10,6 +10,15 @@ import org.springframework.batch.core.listener.JobExecutionListenerSupport;
 
 public class JobCompletionNotificationListener extends JobExecutionListenerSupport{
 	private static final Logger log = LoggerFactory.getLogger(JobCompletionNotificationListener.class);
+	
+	@Override
+	public void beforeJob(JobExecution jobExecution) {
+		if(jobExecution.getStatus() == BatchStatus.COMPLETED) {
+			log.info("!!! JOB Started! Time to verify the results");
+
+		}
+	}
+	
 	@Override
 	public void afterJob(JobExecution jobExecution) {
 		if(jobExecution.getStatus() == BatchStatus.COMPLETED) {

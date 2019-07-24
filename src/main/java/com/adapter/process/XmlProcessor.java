@@ -8,7 +8,6 @@ import org.springframework.batch.item.ItemProcessor;
 
 import com.adapter.model.RequestModel;
 import com.adapter.model.ResponseTagModel;
-
 public class XmlProcessor implements ItemProcessor<RequestModel,ResponseTagModel>{
 
 	private static final Logger log = LoggerFactory.getLogger(XmlProcessor.class);
@@ -17,11 +16,12 @@ public class XmlProcessor implements ItemProcessor<RequestModel,ResponseTagModel
      * @param RequestModel - RequestModel to process
      * @return ResponseTagModel - Processed model
      */
+
 	@Override
 	public ResponseTagModel process(RequestModel arg0) throws Exception {
-		ResponseTagModel tagModel = new ResponseTagModel();
-		System.out.println("JOB FINIHED");
-		return tagModel;
+		// TODO Auto-generated method stub
+		System.out.println("process");
+		return null;
 	}
 
 }

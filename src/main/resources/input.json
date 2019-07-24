@@ -1,4 +1,4 @@
-{"item1": {
+[{"item1": {
 		"originalName":"size",
 		"proposedName": "Length",
 		"noOfChilds":"all",
@@ -17,4 +17,4 @@
 		"noOfChilds":"all",
 		"xPath":"/rss/inventory"
 	}
-}
+}]

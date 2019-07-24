@@ -35,6 +35,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
+import net.sf.json.JSONArray;
+
 /**
  * FileReadWriteUtil.java - This utility class handles JSON and XML read write
  * functions
@@ -128,6 +130,9 @@ public class FileReadWriteUtil {
 //			document = builder.parse(new URL(xmlURL).openStream());
 			document = builder
 					.parse(new File(getClass().getClassLoader().getResource("sampleInput1.xml").getFile()));
+			//Convert input XML to JSON
+			if(document.hasChildNodes())
+				convertXMLtoJson(document);
 			new NamespaceResolverutil(document);
 			for (RequestModel requestModel : reqList) {
 				String xpathExpression = requestModel.getxPath();
@@ -151,6 +156,33 @@ public class FileReadWriteUtil {
 
 	}
 
+	private void convertXMLtoJson(Document doc) {
+		JSONArray jsonArray = convertToJsonArray(doc.getChildNodes());
+        System.out.println("JSONArray ::::: " + jsonArray);
+		
+	}
+	private JSONArray convertToJsonArray(NodeList nodeList) {
+	    JSONArray dataArr = new JSONArray();
+	    net.sf.json.JSONObject dataObject = new net.sf.json.JSONObject();
+	    for (int count = 0; count < nodeList.getLength(); count++) {
+	        Node tempNode = nodeList.item(count);
+	        if (tempNode.getNodeType() == Node.ELEMENT_NODE) {
+	            if (tempNode.hasChildNodes() && tempNode.getChildNodes().getLength() > 1) {
+	                JSONArray temArr = convertToJsonArray(tempNode.getChildNodes());
+	                if (dataObject.containsKey(tempNode.getNodeName())) {
+	                    dataObject.getJSONArray(tempNode.getNodeName()).add(temArr.getJSONObject(0));
+	                } else {
+	                    dataObject.put(tempNode.getNodeName(), temArr);
+	                }
+	            } else {
+	                dataObject.put(tempNode.getNodeName(), tempNode.getTextContent());
+	            }
+	        }
+	    }
+	    dataArr.add(dataObject);
+	    return dataArr;
+	}
+	
 	private void displayNodeList(NodeList nodeList, RequestModel requestModel) {
 		String key = "";
 		for (int i = 0; i < nodeList.getLength(); i++) {
